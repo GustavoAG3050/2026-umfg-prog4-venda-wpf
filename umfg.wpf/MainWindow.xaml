@@ -5,8 +5,14 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:umfg.wpf"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
+        Title="UMFG - Home" Height="450" Width="800">
     <Grid>
-
+        <Button Height="50" Width="100" 
+                HorizontalAlignment="Left" 
+                VerticalAlignment="Top" Click="Button_Click_1">TESTE</Button>
+       
+                
+        
+        
     </Grid>
 </Window>
