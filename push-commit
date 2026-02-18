@@ -1,0 +1,19 @@
+Passo a passo para fazer commit/push do projeto/código no github. 
+
+# 1. Entrar na pasta do projeto
+cd caminho/para/2026-umfg-prog4-venda-wpf
+
+# 2. Atualizar o código local
+git pull origin main
+
+# 3. Verificar o que mudou
+git status
+
+# 4. Adicionar todas as alterações
+git add .
+
+# 5. Criar um commit com mensagem
+git commit -m "Descrição do que foi alterado"
+
+# 6. Enviar para o GitHub
+git push origin main
