@@ -19,11 +19,12 @@ namespace umfg.wpf
         public MainWindow()
         {
             InitializeComponent();
+
+            DataContext = new ViewModel.MainWindowViewModel();
+
         }
 
-        private void Button_Click_1(object sender, RoutedEventArgs e)
-        {
-            MessageBox.Show("Hello World!");
-        }
+
+        
     }
 }

@@ -5,14 +5,31 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:umfg.wpf"
         mc:Ignorable="d"
-        Title="UMFG - Home" Height="450" Width="800">
+        WindowState="Maximized"    Height="720" Width="1080">
     <Grid>
-        <Button Height="50" Width="100" 
-                HorizontalAlignment="Left" 
-                VerticalAlignment="Top" Click="Button_Click_1">TESTE</Button>
-       
-                
-     
-        
+
+        <Grid.RowDefinitions>
+
+
+            <RowDefinition Height="50"/>
+
+            <RowDefinition Height="*"/>
+
+        </Grid.RowDefinitions>
+
+        <StackPanel Grid.Row="0" Orientation="Horizontal" Margin="25 0 0 0">
+
+            <TextBlock Text="{Binding Titulo}" FontSize="28" FontWeight="SemiBold"
+            
+                 FontFamily="Trebuchet MS" VerticalAlignment="Center"/>
+
+            
+        </StackPanel>
+
+        <Frame Grid.Row="1"
+               Content="{Binding UserControl}"
+               NavigationUIVisibility="Hidden"/>
+
+
     </Grid>
 </Window>
