@@ -10,10 +10,14 @@ git pull origin main
 git status
 
 # 4. Adicionar todas as alterações
-git add .
+git add . --all
 
 # 5. Criar um commit com mensagem
 git commit -m "Descrição do que foi alterado"
 
 # 6. Enviar para o GitHub
 git push origin main
+
+# Se modificado, pular os passos 2 e 3, ir do 1 ao 4.
+
+# Não esquecer de colocar o email e username no git bash.
