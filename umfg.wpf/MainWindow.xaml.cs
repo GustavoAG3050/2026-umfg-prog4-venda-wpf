@@ -8,6 +8,8 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using umfg.wpf.UserControls;
+using umfg.wpf.ViewModel;
 
 namespace umfg.wpf
 {
@@ -20,11 +22,11 @@ namespace umfg.wpf
         {
             InitializeComponent();
 
-            DataContext = new ViewModel.MainWindowViewModel();
+            var viewModel = new MainWindowViewModel();
+            viewModel.UserControl = new ucListarProdutos();
 
+            DataContext = viewModel;
+           
         }
-
-
-        
     }
 }

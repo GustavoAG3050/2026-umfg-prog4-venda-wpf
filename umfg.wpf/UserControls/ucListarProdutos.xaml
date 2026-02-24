@@ -5,14 +5,126 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:umfg.wpf.UserControls"
              mc:Ignorable="d" 
-             d:DesignHeight="450" d:DesignWidth="800">
+             d:DesignHeight="720" d:DesignWidth="1080">
     <Grid Background="AliceBlue">
 
-        <Button
-            Style="{DynamicResource MaterialDesignFlatAccentButton}"
-            Content="TESTE"
-            Width="100"
-            Height="50"/>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="50"/>
+        </Grid.RowDefinitions>
+
+
+
+        <Grid Grid.Row ="0">
+
+            <!--  nessa grid será mostrado os produtos para o usuário  !-->
+
+            <Grid Grid.Row="0">
+
+                <ScrollViewer Margin="10">
+
+                    <ListBox ItemsSource="{Binding Produtos}"
+                             SelectedItem="{Binding ProdutoSelecionado}"
+                             SelectionMode="Single">
+
+                        <ListBox.ItemTemplate>
+
+                            <DataTemplate>
+
+                                <Border Width="200" Height="200">
+
+                                    <StackPanel>
+
+                                        <Border Width="200" Height="495"
+                                                CornerRadius="5" Margin="5">
+
+                                            <Border.Effect>
+                                                <DropShadowEffect ShadowDepth="1">
+
+                                                </DropShadowEffect>
+
+                                                <Border.Backgroud>
+
+                                                    <ImageBrush ImageSource="{Binding images}"/>
+
+                                                    </Border.Backgroud>
+
+                                            </Border.Effect>
+                                            
+                                            
+                                            
+                                            
+                                        </Border>
+                                        
+                                        
+                                    </StackPanel>
+                                    
+                                    
+                                </Border>
+                                
+                            </DataTemplate>
+                            
+                        </ListBox.ItemTemplate>
+
+                        <ListBox.ItemsPanel>
+
+                            <ItemsPanelTemplate>
+
+                                <WrapPanel>
+
+
+                                </WrapPanel>
+
+                            </ItemsPanelTemplate>
+
+                        </ListBox.ItemsPanel>
+
+                    </ListBox>
+
+                </ScrollViewer>
+
+            </Grid>
+
+        </Grid>
+
+        <Grid Grid.Row="1">
+
+            <StackPanel Orientation="Horizontal"
+                HorizontalAlignment="Left"
+                VerticalAlignment="Center">
+
+
+                <Button Style="{DynamicResource MaterialDesignFlatButton }"
+                
+                CommandParameter="{Binding}"
+                Command="{Binding Adicional, UpdateSourceTrigger=PropertyChanged}"
+                Content="_Adicionar"
+                Foreground="Black"/>
+            </StackPanel>
+
+            <StackPanel Orientation="Horizontal"
+                HorizontalAlignment="Right"
+                VerticalAlignment="Center">
+
+                    <TextBlock Text="Subtotal: " Margin="0 10 0 0" FontSize="16"/>
+                    <TextBlock Text="R$ " FontWeight="SemiBold" Margin="10 10 0 0" FontSize="16"/>
+                    <TextBlock Text="{Binding Pedido.Total}" FontWeight="SemiBold" Margin="10 10 0 0"
+                   FontSize="16"/>
+
+                    <Button Style="{DynamicResource MaterialDesignFlatButton }"
+    
+                         CommandParameter="{Binding}"
+                         Command="{Binding Adicional, UpdateSourceTrigger=PropertyChanged}"
+                         Content="_Receber"
+                         Foreground="Black"/>
+
+
+                </StackPanel>
+
+        </Grid>
 
     </Grid>
+
+    
+    
 </UserControl>
