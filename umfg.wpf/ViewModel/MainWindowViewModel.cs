@@ -23,6 +23,10 @@ namespace umfg.wpf.ViewModel
 
         }
 
+
+        public MainWindowViewModel ListarProdutos { get; private set; } = new();
+
+
         public MainWindowViewModel() : base("Main Screen")
         {
         }
@@ -30,6 +34,17 @@ namespace umfg.wpf.ViewModel
         public void Update(ISubject subject)
         {
             throw new NotImplementedException();
+
+
         }
+
+        public void Update(ISubject subject)
+        {
+
+            if (subject is ListarProdutosViewModel)
+                UserControl = (subject as ListarProdutosViewModel).UserControls;
+
+        }
+
     }
 }

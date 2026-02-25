@@ -6,6 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Media.Imaging;
 using umfg.wpf.Abstracts;
+using umfg.wpf.Interfaces;
 using umfg.wpf.Model;
 
 namespace umfg.wpf.ViewModel
@@ -15,7 +16,7 @@ namespace umfg.wpf.ViewModel
 
         private ProdutoModel _produtoSelecionado = new();
 
-        private ObservableCollection<ProdutoModel> _produtos;
+        private ObservableCollection<ProdutoModel> _produtos = [];
 
         public ProdutoModel ProdutoSelecionado
         {
@@ -29,8 +30,15 @@ namespace umfg.wpf.ViewModel
             set => SetField(ref _produtos, value);
         }
 
-        public ListarProdutosViewModel() : base("Produtos")
+        public ListarProdutosViewModel(IObserver observer, UserControls userControls) : base("Produtos")
         {
+
+            UserControls = UserControls;
+            MainWindow = observer;
+
+            Add(observer);
+            
+            
 
             CarregarProdutos();
 
@@ -46,7 +54,7 @@ namespace umfg.wpf.ViewModel
             {
                 
                 imagem = new BitmapImage(
-                    new Uri(@"..\net-8.0-windows\batata.png", UriKind.Relative)),
+                    new Uri(@"..\net8.0-windows\batata.png", UriKind.Relative)),
 
                    descricao = "Batata Frita 300g",
                    referencia = "BAT300",
@@ -58,7 +66,7 @@ namespace umfg.wpf.ViewModel
             {
 
                 imagem = new BitmapImage(
-                    new Uri(@"..\net-8.0-windows\combo.png", UriKind.Relative)),
+                    new Uri(@"..\net8.0-windows\combo.png", UriKind.Relative)),
 
                 descricao = "Combo Big Mac + Batata 300g + Refil 500ml",
                 referencia = "COM500",
@@ -70,7 +78,7 @@ namespace umfg.wpf.ViewModel
             {
 
                 imagem = new BitmapImage(
-                    new Uri(@"..\net-8.0-windows\lanche.png", UriKind.Relative)),
+                    new Uri(@"..\net8.0-windows\lanche.png", UriKind.Relative)),
 
                 descricao = "Big Mac 300g",
                 referencia = "BMC300",
@@ -82,7 +90,7 @@ namespace umfg.wpf.ViewModel
             {
 
                 imagem = new BitmapImage(
-                    new Uri(@"..\net-8.0-windows\refrigerante.png", UriKind.Relative)),
+                    new Uri(@"..\net8.0-windows\refrigerante.png", UriKind.Relative)),
 
                 descricao = "Refrigerante Refill 500ml",
                 referencia = "RFL500",

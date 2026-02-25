@@ -22,10 +22,9 @@ namespace umfg.wpf
         {
             InitializeComponent();
 
-            var viewModel = new MainWindowViewModel();
-            viewModel.UserControl = new ucListarProdutos();
 
-            DataContext = viewModel;
+
+            DataContext = new MainWindowViewModel();
            
         }
     }

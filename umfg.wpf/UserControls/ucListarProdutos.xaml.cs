@@ -12,6 +12,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using umfg.wpf.Interfaces;
 using umfg.wpf.ViewModel;
 
 namespace umfg.wpf.UserControls
@@ -21,10 +22,21 @@ namespace umfg.wpf.UserControls
     /// </summary>
     public partial class ucListarProdutos : UserControl
     {
-        public ucListarProdutos()
+        private public ucListarProdutos(IObserver observer)
         {
             InitializeComponent();
             DataContext = new ListarProdutosViewModel();
         }
+
+        internal static void Show(IObserver observer)
+        {
+
+            (new ucListarProdutos(observer).DataContext as ListarProdutosViewModel).Notify();
+
+
+
+
+        }
+
     }
 }

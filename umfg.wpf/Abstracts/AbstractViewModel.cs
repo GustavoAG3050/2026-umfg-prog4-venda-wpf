@@ -25,6 +25,9 @@ namespace umfg.wpf.Abstracts
 
                 }
 
+                public UserControls UserControls { get; protected set; }
+                public IObserver MainWindow { get; protected set; }
+
                  protected AbstractViewModel(string titulo)
                  {
 
