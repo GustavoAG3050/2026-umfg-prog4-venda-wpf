@@ -2,7 +2,7 @@
 using System.Data;
 using System.Windows;
 
-namespace umfg.wpf
+namespace umfg.venda.app
 {
     /// <summary>
     /// Interaction logic for App.xaml

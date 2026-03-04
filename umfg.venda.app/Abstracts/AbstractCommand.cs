@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
 
-namespace umfg.wpf.Abstracts
+namespace umfg.venda.app.Abstracts
 {
     internal abstract class AbstractCommand : AbstractNotifyPropertyChange, ICommand
     {
@@ -15,15 +15,12 @@ namespace umfg.wpf.Abstracts
         {
             return true;
         }
-        
+
         public abstract void Execute(object? parameter);
-        
+
         public void RaiseCanExecuteChanged()
         {
-
             CanExecuteChanged?.Invoke(this, EventArgs.Empty);
-
         }
-
     }
 }

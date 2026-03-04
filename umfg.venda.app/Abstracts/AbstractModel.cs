@@ -4,14 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace umfg.wpf.Interfaces
+namespace umfg.venda.app.Abstracts
 {
-    internal interface IObserver
+    internal abstract class AbstractModel : AbstractNotifyPropertyChange
     {
-
-        void Update(ISubject subject);
-
-
-
     }
 }

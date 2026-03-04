@@ -12,31 +12,25 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
-using umfg.wpf.Interfaces;
-using umfg.wpf.ViewModel;
+using umfg.venda.app.Interfaces;
+using umfg.venda.app.ViewModels;
 
-namespace umfg.wpf.UserControls
+namespace umfg.venda.app.UserControls
 {
     /// <summary>
     /// Interação lógica para ucListarProdutos.xam
     /// </summary>
     public partial class ucListarProdutos : UserControl
     {
-        private public ucListarProdutos(IObserver observer)
+        private ucListarProdutos(IObserver observer)
         {
             InitializeComponent();
-            DataContext = new ListarProdutosViewModel();
+            DataContext = new ListarProdutosViewModel(observer, this);
         }
 
         internal static void Show(IObserver observer)
         {
-
             (new ucListarProdutos(observer).DataContext as ListarProdutosViewModel).Notify();
-
-
-
-
         }
-
     }
 }

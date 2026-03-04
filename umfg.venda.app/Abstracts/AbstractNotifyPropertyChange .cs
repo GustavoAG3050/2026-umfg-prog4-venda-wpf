@@ -6,7 +6,7 @@ using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace umfg.wpf.Abstracts
+namespace umfg.venda.app.Abstracts
 {
     internal abstract class AbstractNotifyPropertyChange : INotifyPropertyChanged
     {
@@ -27,5 +27,4 @@ namespace umfg.wpf.Abstracts
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameProperty));
         }
     }
-
 }

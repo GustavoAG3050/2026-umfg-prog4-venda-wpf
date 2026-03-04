@@ -1,0 +1,39 @@
+﻿<Window x:Class="umfg.venda.app.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:umfg.venda.app"
+        mc:Ignorable="d"        
+        WindowState="Maximized" Height="720" Width="1080">
+    <Grid Background="#ECF0F1">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="50"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <StackPanel Grid.Row="0" Orientation="Horizontal" Margin="25 0 0 0">
+            <TextBlock Text="{Binding Titulo}" FontSize="28" FontWeight="SemiBold"
+                       FontFamily="Trebuchet MS" VerticalAlignment="Center"/>
+        </StackPanel>
+
+        <Button Grid.Row="1"
+                VerticalAlignment="Center"
+                HorizontalAlignment="Center"
+                Height="250"
+                Width="250"
+                Content="_Iniciar"
+                FontSize="30"
+                FontWeight="SemiBold"
+                CommandParameter="{Binding}"
+                Command="{Binding ListarProdutos, UpdateSourceTrigger=PropertyChanged}"                        
+                Style="{StaticResource MaterialDesignRaisedLightButton}"
+                Margin="50 0 0 0 "
+                Foreground="White"/>
+        
+        <Frame Grid.Row="1" 
+               Content="{Binding UserControl}"
+               NavigationUIVisibility="Hidden">
+        </Frame>
+    </Grid>
+</Window>
