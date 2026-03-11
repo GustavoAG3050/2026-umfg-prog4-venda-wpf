@@ -10,7 +10,7 @@ namespace umfg.venda.app.Abstracts
 {
     internal abstract class AbstractViewModel : AbstractNotifyPropertyChange, ISubject
     {
-        private readonly ICollection<IObserver> _observers = [];
+        private readonly ICollection<IObserver> _observers = new List<IObserver>();
 
         private string _titulo = string.Empty;
 

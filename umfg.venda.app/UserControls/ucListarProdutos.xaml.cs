@@ -32,5 +32,10 @@ namespace umfg.venda.app.UserControls
         {
             (new ucListarProdutos(observer).DataContext as ListarProdutosViewModel).Notify();
         }
+
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
     }
 }

@@ -12,7 +12,7 @@ namespace umfg.venda.app.Models
     {
         private Guid _id = Guid.NewGuid();
         private decimal _total = 0.0m;
-        private ObservableCollection<ProdutoModel> _produtos = [];
+        private ObservableCollection<ProdutoModel> _produtos = new System.Collections.ObjectModel.ObservableCollection<ProdutoModel>();
 
         public Guid Id 
         { 

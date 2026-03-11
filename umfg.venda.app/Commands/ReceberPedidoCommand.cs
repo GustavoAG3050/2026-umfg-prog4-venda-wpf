@@ -15,7 +15,12 @@ namespace umfg.venda.app.Commands
         //TODO: habilitar este botao apenas quando um produto for adicionado no carrinho
         public override bool CanExecute(object? parameter)
         {
-            return base.CanExecute(parameter);
+            var vm = parameter as ListarProdutosViewModel;
+
+            if (vm is null)
+                return false;
+
+            return vm.Pedido is not null && vm.Pedido.Produtos is not null && vm.Pedido.Produtos.Count > 0;
         }
 
         public override void Execute(object? parameter)

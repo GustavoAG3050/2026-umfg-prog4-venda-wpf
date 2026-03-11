@@ -4,6 +4,7 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:umfg.venda.app.UserControls"
+             xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
              mc:Ignorable="d" 
              d:DesignHeight="720" d:DesignWidth="1080">
     <Viewbox Stretch="Uniform">
@@ -17,6 +18,17 @@
                 <ColumnDefinition Width="*"/>
                 <ColumnDefinition MinWidth="500" MaxWidth="500"/>
             </Grid.ColumnDefinitions>
+
+            <Button Command="{Binding Voltar}"
+                    HorizontalAlignment="Right" VerticalAlignment="Top" Margin="12"
+                    Panel.ZIndex="100"
+                    Style="{StaticResource MaterialDesignRaisedLightButton}"
+                    Background="#6A1B9A"
+                    Foreground="White"
+                    Padding="6"
+                    materialDesign:ButtonAssist.CornerRadius="12">
+                <materialDesign:PackIcon Kind="ArrowLeft" Width="18" Height="18" />
+            </Button>
 
             <StackPanel Grid.Row="0" 
                         Grid.Column="0"
@@ -49,11 +61,11 @@
                         </Style>
                     </DataGrid.Resources>
 
-                    <DataGrid.Columns>
+            <DataGrid.Columns>
                         <DataGridTemplateColumn>
                             <DataGridTemplateColumn.CellTemplate>
                                 <DataTemplate>
-                                    <Ellipse Height="100" Width="100" HorizontalAlignment="Center">
+                                    <Ellipse Height="95" Width="95" HorizontalAlignment="Center">
                                         <Ellipse.Fill>
                                             <ImageBrush ImageSource="{Binding Imagem}"/>
                                         </Ellipse.Fill>
@@ -83,7 +95,7 @@
 
                                     </StackPanel>
                                 </DataTemplate>
-                                
+
                             </DataGridTemplateColumn.CellTemplate>
                         </DataGridTemplateColumn>
 
@@ -105,56 +117,64 @@
                                         VerticalAlignment="Center"
                                         TextWrapping="Wrap"/>
                                     </StackPanel>
- 
 
-                                        
+
+
                                 </DataTemplate>
                             </DataGridTemplateColumn.CellTemplate>
-                            
+
                         </DataGridTemplateColumn>
-                        
+
                     </DataGrid.Columns>
                 </DataGrid>
             </StackPanel>
 
-            <StackPanel Grid.Row="0" Grid.Column="1" Orientation="Vertical">
+            <!-- Centered payment panel overlay -->
+            <Grid Grid.Row="0" Grid.ColumnSpan="2" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="40,0,0,0">
+                <Border Width="520" Background="Transparent">
+                    <StackPanel Orientation="Vertical" HorizontalAlignment="Center">
+                        <ComboBox
+                            FontSize="24"
+                            FontWeight="SemiBold"
+                            SelectedIndex="0"
+                            Width="480">
+                            <ComboBoxItem Content="Selecionar um Cartão"/>
+                            <ComboBoxItem Content="Crédito"/>
+                            <ComboBoxItem Content="Débito"/>
+                        </ComboBox>
 
-                <ComboBox
-                    FontSize="24"
-                    FontWeight="SemiBold"
-                    SelectedIndex="0"
-                    Width="500">
-                    <ComboBoxItem Content="Selecionar um Cartão"/>
-                    <ComboBoxItem Content="Crédito"/>
-                    <ComboBoxItem Content="Débito"/>
-                </ComboBox>
+                        <TextBlock Text="Número do Cartão" FontSize="24" FontWeight="SemiBold" Margin="0,12,0,0"/>
+                        <TextBox Text="{Binding NumeroCartao, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                 FontSize="20"
+                                 Width="491"
+                                 FontWeight="SemiBold"/>
 
+                        <TextBlock Text="CVV" FontSize="24" FontWeight="SemiBold" Margin="0,12,0,0"/>
+                        <TextBox Text="{Binding CVV, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                 FontSize="20"
+                                 Width="489"
+                                 FontWeight="SemiBold"/>
 
-                <TextBlock Text="Número do Cartão" FontSize="24" FontWeight="SemiBold"/>
+                        <TextBlock Text="Data de Validade" FontSize="24" FontWeight="SemiBold" Margin="0,12,0,0"/>
 
-                <TextBox Text="{Binding NumeroCartao, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
-                         FontSize="24"
-                         FontWeight="SemiBold"/>
+                        <DatePicker SelectedDate="{Binding DataValidade, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                    FontSize="20"
+                                    Width="200"
+                                    HorizontalAlignment="Left"/>
 
-                <TextBlock Text="CVV" FontSize="24" FontWeight="SemiBold"/>
+                        <TextBlock Text="Nome no Cartão" FontSize="24" FontWeight="SemiBold" Margin="0,12,0,0"/>
 
-                <TextBox Text="{Binding CVV, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
-                 FontSize="24"
-                  FontWeight="SemiBold"/>
-        
-                <TextBlock Text="Data de Validade" FontSize="24" FontWeight="SemiBold"/>
+                        <TextBox Text="{Binding Nome, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                 FontSize="20"
+                                 Width="495"
+                                 FontWeight="SemiBold"/>
 
-                <TextBox Text="{Binding DataValidade, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
-                  FontSize="24"
-                 FontWeight="SemiBold"/>
-
-                <TextBlock Text="Nome no Cartão" FontSize="24" FontWeight="SemiBold"/>
-
-                <TextBox Text="{Binding Nome, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
-                 FontSize="24"
-                 FontWeight="SemiBold"/>
-
-            </StackPanel>           
+                        <Button Content="Receber" Command="{Binding Receber}" Width="140" Height="40" Margin="0 16 0 0"
+                                Background="#008000" Foreground="White" HorizontalAlignment="Center"
+                                materialDesign:ButtonAssist.CornerRadius="12"/>
+                    </StackPanel>
+                </Border>
+            </Grid>
 
         </Grid>
     </Viewbox>

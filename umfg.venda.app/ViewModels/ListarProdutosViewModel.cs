@@ -16,7 +16,7 @@ namespace umfg.venda.app.ViewModels
     internal sealed class ListarProdutosViewModel : AbstractViewModel
     {
         private ProdutoModel _produtoSelecionado = new();
-        private ObservableCollection<ProdutoModel> _produtos = [];
+        private ObservableCollection<ProdutoModel> _produtos = new System.Collections.ObjectModel.ObservableCollection<ProdutoModel>();
         private PedidoModel _pedido = new();
 
         public ProdutoModel ProdutoSelecionado
@@ -40,6 +40,7 @@ namespace umfg.venda.app.ViewModels
         public AdicionarProdutoPedidoCommand Adicionar { get; private set; } = new();
         public RemoverProdutoPedidoCommand Remover { get; private set; } = new();
         public ReceberPedidoCommand Receber { get; private set; } = new();
+        public Abstracts.AbstractCommand Voltar { get; private set; }
 
         public ListarProdutosViewModel(IObserver observer, UserControl userControl) : base("Produtos")
         {
@@ -48,13 +49,33 @@ namespace umfg.venda.app.ViewModels
 
             Add(observer);
             CarregarProdutos();
+
+            Voltar = new VoltarCommand(this);
+        }
+
+        private sealed class VoltarCommand : Abstracts.AbstractCommand
+        {
+            private readonly ListarProdutosViewModel _vm;
+
+            public VoltarCommand(ListarProdutosViewModel vm)
+            {
+                _vm = vm;
+            }
+
+            public override void Execute(object? parameter)
+            {
+                if (_vm.MainWindow is umfg.venda.app.ViewModels.MainWindowViewModel mainVm)
+                {
+                    mainVm.UserControl = null;
+                }
+            }
         }
 
         public void RaiseCanExecuteChanged()
         {
             Adicionar.RaiseCanExecuteChanged();
             Remover.RaiseCanExecuteChanged();
-            //Receber.RaiseCanExecuteChanged();
+            Receber.RaiseCanExecuteChanged();
         }
 
         private void CarregarProdutos()
