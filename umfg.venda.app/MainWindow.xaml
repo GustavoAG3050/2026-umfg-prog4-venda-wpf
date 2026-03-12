@@ -9,16 +9,17 @@
         WindowState="Maximized" Height="720" Width="1080">
     <Grid Background="#ECF0F1">
         <Grid.RowDefinitions>
-            <RowDefinition Height="50"/>
             <RowDefinition Height="*"/>
+            <RowDefinition Height="50"/>
         </Grid.RowDefinitions>
 
-        <StackPanel Grid.Row="0" Orientation="Horizontal" Margin="25 0 0 0">
+        <!-- Title moved to bottom left -->
+        <StackPanel Grid.Row="1" Orientation="Horizontal" Margin="25,0,0,8" VerticalAlignment="Bottom">
             <TextBlock Text="{Binding Titulo}" FontSize="28" FontWeight="SemiBold"
                        FontFamily="Trebuchet MS" VerticalAlignment="Center"/>
         </StackPanel>
 
-        <Button Grid.Row="1"
+        <Button Grid.Row="0"
                 VerticalAlignment="Center"
                 HorizontalAlignment="Center"
                 Content="_Iniciar"
@@ -33,7 +34,7 @@
                 Width="{Binding ActualHeight, RelativeSource={RelativeSource AncestorType=Grid}, Converter={StaticResource MulConverter}, ConverterParameter=0.2}"
                 Height="{Binding ActualHeight, RelativeSource={RelativeSource AncestorType=Grid}, Converter={StaticResource MulConverter}, ConverterParameter=0.2}"/>
         
-        <Frame Grid.Row="1" 
+        <Frame Grid.Row="0" 
                Content="{Binding UserControl}"
                NavigationUIVisibility="Hidden">
         </Frame>

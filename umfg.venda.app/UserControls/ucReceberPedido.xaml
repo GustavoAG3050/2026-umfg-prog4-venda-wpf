@@ -7,69 +7,92 @@
              xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
              mc:Ignorable="d" 
              d:DesignHeight="720" d:DesignWidth="1080">
-    <Viewbox Stretch="Uniform">
-        <Grid Background="#ECF0F1" Height="720" Width="1080">
-            <Grid.RowDefinitions>
-                <RowDefinition Height="*"/>
-                <RowDefinition Height="50"/>
-            </Grid.RowDefinitions>
 
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="*"/>
-                <ColumnDefinition MinWidth="500" MaxWidth="500"/>
-            </Grid.ColumnDefinitions>
+    <Grid Background="#ECF0F1">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="50"/>
+        </Grid.RowDefinitions>
 
-            <Button Command="{Binding Voltar}"
-                    HorizontalAlignment="Right" VerticalAlignment="Top" Margin="12"
-                    Panel.ZIndex="100"
-                    Style="{StaticResource MaterialDesignRaisedLightButton}"
-                    Background="#6A1B9A"
-                    Foreground="White"
-                    Padding="6"
-                    materialDesign:ButtonAssist.CornerRadius="12">
-                <materialDesign:PackIcon Kind="ArrowLeft" Width="18" Height="18" />
-            </Button>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*" />
+            <ColumnDefinition Width="Auto" />
+        </Grid.ColumnDefinitions>
 
-            <StackPanel Grid.Row="0" 
-                        Grid.Column="0"
-                        Orientation="Horizontal">
-                <DataGrid ItemsSource="{Binding Pedido.Produtos}"
-                          HeadersVisibility="None"
-                          AutoGenerateColumns="False"
-                          HorizontalAlignment="Stretch"
-                          VerticalAlignment="Stretch"
-                          GridLinesVisibility="None"
-                          CanUserSortColumns="False">
-                    <DataGrid.Resources>
-                        <Style TargetType="DataGrid">
-                            <Setter Property="BorderThickness" Value="0"/>
-                        </Style>
+        <!-- Back button moved to top-right, increased size by ~6px padding -->
+        <Button Command="{Binding Voltar}"
+                HorizontalAlignment="Right" VerticalAlignment="Top" Margin="12,12,12,12"
+                Panel.ZIndex="200"
+                Style="{StaticResource MaterialDesignRaisedLightButton}"
+                Background="#6A1B9A"
+                Foreground="White"
+                Padding="10"
+                materialDesign:ButtonAssist.CornerRadius="12">
+            <materialDesign:PackIcon Kind="ArrowLeft" Width="20" Height="20" />
+        </Button>
 
-                        <Style TargetType="DataGridCell">
-                            <Setter Property="BorderThickness" Value="0"/>
-                            <Setter Property="BorderBrush" Value="#ECF0F1"/>
-                            <Setter Property="Background" Value="#ECF0F1"/>
-                            <Setter Property="Foreground" Value="Black"/>
+        <!-- Move cart items 8px to the right by increasing left margin -->
+        <StackPanel Grid.Row="0" Grid.Column="0" Orientation="Horizontal" Margin="29,8,8,8">
+            <DataGrid ItemsSource="{Binding Pedido.Produtos}"
+                      HeadersVisibility="None"
+                      AutoGenerateColumns="False"
+                      HorizontalAlignment="Stretch"
+                      VerticalAlignment="Top"
+                      GridLinesVisibility="None"
+                      CanUserSortColumns="False"
+                      CanUserAddRows="False"
+                      SelectionUnit="FullRow"
+                      Background="Transparent"
+                      RowBackground="Transparent"
+                      AlternatingRowBackground="Transparent"
+                      MinRowHeight="100">
+                <DataGrid.Resources>
+                    <Style TargetType="DataGrid">
+                        <Setter Property="BorderThickness" Value="0"/>
+                        <Setter Property="Background" Value="Transparent"/>
+                    </Style>
 
-                            <Style.Triggers>
-                                <Trigger Property="IsSelected" Value="True">
-                                    <Setter Property="BorderBrush" Value="#E0E0E0"/>
-                                    <Setter Property="Background" Value="#E0E0E0"/>
-                                    <Setter Property="Foreground" Value="White"/>
-                                </Trigger>
-                            </Style.Triggers>
-                        </Style>
-                    </DataGrid.Resources>
+                    <!-- Ensure cells remain transparent and only the DataGridRow shows selection background -->
+                    <Style TargetType="DataGridCell">
+                        <Setter Property="BorderThickness" Value="0"/>
+                        <Setter Property="BorderBrush" Value="#ECF0F1"/>
+                        <Setter Property="Background" Value="Transparent"/>
+                        <Setter Property="Foreground" Value="Black"/>
+                    </Style>
+
+                    <Style TargetType="DataGridRow">
+                        <Setter Property="Background" Value="Transparent"/>
+                        <Setter Property="Foreground" Value="Black"/>
+                        <Setter Property="BorderThickness" Value="0"/>
+                        <Setter Property="Padding" Value="0"/>
+                        <Style.Triggers>
+                            <Trigger Property="IsSelected" Value="True">
+                                <Setter Property="Background" Value="#E0E0E0"/>
+                                <Setter Property="Foreground" Value="Black"/>
+                            </Trigger>
+                        </Style.Triggers>
+                    </Style>
+                </DataGrid.Resources>
 
             <DataGrid.Columns>
                         <DataGridTemplateColumn>
                             <DataGridTemplateColumn.CellTemplate>
                                 <DataTemplate>
-                                    <Ellipse Height="95" Width="95" HorizontalAlignment="Center">
-                                        <Ellipse.Fill>
-                                            <ImageBrush ImageSource="{Binding Imagem}"/>
-                                        </Ellipse.Fill>
-                                    </Ellipse>
+                                    <StackPanel Orientation="Horizontal">
+                                        <Ellipse Height="78" Width="78" HorizontalAlignment="Center">
+                                            <Ellipse.Fill>
+                                                <ImageBrush ImageSource="{Binding Imagem}"/>
+                                            </Ellipse.Fill>
+                                        </Ellipse>
+
+                                        <!-- Red X button next to cart item; bind command to parent viewmodel via RelativeSource -->
+                                        <Button Width="28" Height="28" Background="#D32F2F" Foreground="White" Margin="8,0,0,0"
+                                                Command="{Binding DataContext.RemoverItem, RelativeSource={RelativeSource AncestorType=UserControl}}"
+                                                CommandParameter="{Binding}"
+                                                Padding="0">
+                                            <TextBlock Text="✕" FontSize="18" FontWeight="Bold" Foreground="White" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                        </Button>
+                                    </StackPanel>
                                 </DataTemplate>
                             </DataGridTemplateColumn.CellTemplate>
                         </DataGridTemplateColumn>
@@ -77,18 +100,18 @@
                         <DataGridTemplateColumn Width="300">
                             <DataGridTemplateColumn.CellTemplate>
                                 <DataTemplate>
-                                    <StackPanel Orientation="Horizontal">
+                                    <StackPanel Orientation="Horizontal" Margin="13,0,0,0">
                                         <TextBlock
         Text="{Binding Referencia}"
         FontWeight="SemiBold"
-        FontSize="24"
+        FontSize="20"
         VerticalAlignment="Center"
         HorizontalAlignment="Left"/>
 
                                         <TextBlock
             Text="{Binding Descricao}"
             FontWeight="SemiBold"
-            FontSize="24"
+            FontSize="20"
             VerticalAlignment="Center"
             HorizontalAlignment="Left"
             TextWrapping="Wrap"/>
@@ -102,7 +125,7 @@
                         <DataGridTemplateColumn>
                             <DataGridTemplateColumn.CellTemplate>
                                 <DataTemplate>
-                                    <StackPanel Orientation="Vertical">
+                                    <StackPanel Orientation="Vertical" Margin="12,0,0,0">
 
                                         <TextBlock Text="R$"
                           FontWeight="ExtraBold"
@@ -118,8 +141,6 @@
                                         TextWrapping="Wrap"/>
                                     </StackPanel>
 
-
-
                                 </DataTemplate>
                             </DataGridTemplateColumn.CellTemplate>
 
@@ -127,55 +148,32 @@
 
                     </DataGrid.Columns>
                 </DataGrid>
+        </StackPanel>
+
+        <!-- Payment panel moved 5px left (closer to cart items) by decreasing left margin -->
+        <Border Grid.Row="0" Grid.Column="1" Margin="6,16,16,16" Background="Transparent" MaxWidth="520" VerticalAlignment="Center">
+            <StackPanel Orientation="Vertical" HorizontalAlignment="Stretch" Margin="3">
+                <ComboBox FontSize="18" FontWeight="SemiBold" SelectedIndex="0" HorizontalAlignment="Stretch" Margin="0,0,0,8">
+                    <ComboBoxItem Content="Selecionar um Cartão"/>
+                    <ComboBoxItem Content="Crédito"/>
+                    <ComboBoxItem Content="Débito"/>
+                </ComboBox>
+
+                <TextBlock Text="Número do Cartão" FontSize="16" FontWeight="SemiBold" Margin="0,4,0,4"/>
+                <TextBox Text="{Binding NumeroCartao, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" FontSize="15" HorizontalAlignment="Stretch" Margin="0,0,0,8"/>
+
+                <TextBlock Text="CVV" FontSize="16" FontWeight="SemiBold" Margin="0,4,0,4"/>
+                <TextBox Text="{Binding CVV, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" FontSize="15" HorizontalAlignment="Stretch" Margin="0,0,0,8"/>
+
+                <TextBlock Text="Nome no Cartão" FontSize="16" FontWeight="SemiBold" Margin="0,4,0,4"/>
+                <TextBox Text="{Binding Nome, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" FontSize="15" HorizontalAlignment="Stretch" Margin="0,0,0,8"/>
+
+                <TextBlock Text="Data de Validade" FontSize="16" FontWeight="SemiBold" Margin="0,4,0,4"/>
+                <DatePicker SelectedDate="{Binding DataValidade, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" FontSize="15" HorizontalAlignment="Stretch" Margin="0,0,0,12"/>
+
+                <Button Content="Pagar" Command="{Binding Receber}" Width="140" Height="40" Background="#008000" Foreground="White" HorizontalAlignment="Right" materialDesign:ButtonAssist.CornerRadius="12"/>
             </StackPanel>
+        </Border>
 
-            <!-- Centered payment panel overlay -->
-            <Grid Grid.Row="0" Grid.ColumnSpan="2" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="40,0,0,0">
-                <Border Width="520" Background="Transparent">
-                    <StackPanel Orientation="Vertical" HorizontalAlignment="Center">
-                        <ComboBox
-                            FontSize="24"
-                            FontWeight="SemiBold"
-                            SelectedIndex="0"
-                            Width="480">
-                            <ComboBoxItem Content="Selecionar um Cartão"/>
-                            <ComboBoxItem Content="Crédito"/>
-                            <ComboBoxItem Content="Débito"/>
-                        </ComboBox>
-
-                        <TextBlock Text="Número do Cartão" FontSize="24" FontWeight="SemiBold" Margin="0,12,0,0"/>
-                        <TextBox Text="{Binding NumeroCartao, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
-                                 FontSize="20"
-                                 Width="491"
-                                 FontWeight="SemiBold"/>
-
-                        <TextBlock Text="CVV" FontSize="24" FontWeight="SemiBold" Margin="0,12,0,0"/>
-                        <TextBox Text="{Binding CVV, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
-                                 FontSize="20"
-                                 Width="489"
-                                 FontWeight="SemiBold"/>
-
-                        <TextBlock Text="Data de Validade" FontSize="24" FontWeight="SemiBold" Margin="0,12,0,0"/>
-
-                        <DatePicker SelectedDate="{Binding DataValidade, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
-                                    FontSize="20"
-                                    Width="200"
-                                    HorizontalAlignment="Left"/>
-
-                        <TextBlock Text="Nome no Cartão" FontSize="24" FontWeight="SemiBold" Margin="0,12,0,0"/>
-
-                        <TextBox Text="{Binding Nome, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
-                                 FontSize="20"
-                                 Width="495"
-                                 FontWeight="SemiBold"/>
-
-                        <Button Content="Receber" Command="{Binding Receber}" Width="140" Height="40" Margin="0 16 0 0"
-                                Background="#008000" Foreground="White" HorizontalAlignment="Center"
-                                materialDesign:ButtonAssist.CornerRadius="12"/>
-                    </StackPanel>
-                </Border>
-            </Grid>
-
-        </Grid>
-    </Viewbox>
+    </Grid>
 </UserControl>

@@ -36,7 +36,7 @@ namespace umfg.venda.app.Commands
             }
 
             var result = MessageBox
-                .Show("Deseja realmente incluir este item no carrinho?", 
+                .Show("Adicionar esse produto no carrinho?", 
                             "Confirmar produto", MessageBoxButton.YesNo);
 
             if (!MessageBoxResult.Yes.Equals(result))

@@ -51,18 +51,37 @@ namespace umfg.venda.app.ViewModels
 
         public Abstracts.AbstractCommand Receber { get; private set; }
         public Abstracts.AbstractCommand Voltar { get; private set; }
+        public Abstracts.AbstractCommand RemoverItem { get; private set; }
 
         public ReceberPedidoViewModel(UserControl userControl, IObserver observer, PedidoModel pedido)
             : base("Receber Pedido")
         {
             UserControl = userControl ?? throw new ArgumentNullException(nameof(userControl));
             MainWindow = observer ?? throw new ArgumentNullException(nameof(observer));
-            Pedido = pedido ?? throw new ArgumentNullException(nameof(pedido));
+
+            // ensure shared Pedido instance with MainWindowViewModel so cart persists across navigation
+            if (observer is umfg.venda.app.ViewModels.MainWindowViewModel mainVm)
+            {
+                if (mainVm.Pedido is not null && mainVm.Pedido.Produtos is not null && mainVm.Pedido.Produtos.Count > 0)
+                {
+                    Pedido = mainVm.Pedido;
+                }
+                else
+                {
+                    Pedido = pedido ?? throw new ArgumentNullException(nameof(pedido));
+                    mainVm.Pedido = Pedido;
+                }
+            }
+            else
+            {
+                Pedido = pedido ?? throw new ArgumentNullException(nameof(pedido));
+            }
 
             Add(observer);
 
             Receber = new ReceberCommand(this);
             Voltar = new VoltarCommand(this);
+            RemoverItem = new RemoverItemCommand(this);
         }
 
         private sealed class ReceberCommand : Abstracts.AbstractCommand
@@ -157,6 +176,38 @@ namespace umfg.venda.app.ViewModels
                 if (_vm.MainWindow is umfg.venda.app.ViewModels.MainWindowViewModel mainVm)
                 {
                     umfg.venda.app.UserControls.ucListarProdutos.Show(mainVm);
+                }
+            }
+        }
+
+        private sealed class RemoverItemCommand : Abstracts.AbstractCommand
+        {
+            private readonly ReceberPedidoViewModel _vm;
+
+            public RemoverItemCommand(ReceberPedidoViewModel vm)
+            {
+                _vm = vm;
+            }
+
+            public override bool CanExecute(object? parameter)
+            {
+                return parameter is umfg.venda.app.Models.ProdutoModel && _vm?.Pedido?.Produtos?.Any() == true;
+            }
+
+            public override void Execute(object? parameter)
+            {
+                if (parameter is not umfg.venda.app.Models.ProdutoModel produto)
+                    return;
+
+                if (_vm?.Pedido?.Produtos is null)
+                    return;
+
+                // Find and remove the product from cart
+                var produtoNoCarrinho = _vm.Pedido.Produtos.FirstOrDefault(x => x.Id == produto.Id);
+                if (produtoNoCarrinho is not null)
+                {
+                    _vm.Pedido.Produtos.Remove(produtoNoCarrinho);
+                    _vm.Pedido.Total = _vm.Pedido.Produtos.Sum(x => x.Valor);
                 }
             }
         }

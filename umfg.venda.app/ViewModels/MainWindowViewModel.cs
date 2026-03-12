@@ -7,17 +7,25 @@ using System.Windows.Controls;
 using umfg.venda.app.Abstracts;
 using umfg.venda.app.Commands;
 using umfg.venda.app.Interfaces;
+using umfg.venda.app.Models;
 
 namespace umfg.venda.app.ViewModels
 {
     internal sealed class MainWindowViewModel : AbstractViewModel, IObserver
     {
         private UserControl _userControl;
+        private PedidoModel _pedido = new PedidoModel();
 
         public UserControl UserControl
         {
             get => _userControl;
             set => SetField(ref _userControl, value);
+        }
+
+        public PedidoModel Pedido
+        {
+            get => _pedido;
+            set => SetField(ref _pedido, value);
         }
 
         public ListarProdutosCommand ListarProdutos { get; private set; } = new();

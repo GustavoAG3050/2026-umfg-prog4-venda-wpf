@@ -14,16 +14,16 @@
                 <RowDefinition Height="50"/>
             </Grid.RowDefinitions>
 
-            <!-- Back button (top-left) -->
+            <!-- Back button (top-right) -->
             <Button Command="{Binding Voltar}"
-                    HorizontalAlignment="Left" VerticalAlignment="Top" Margin="12"
-                    Panel.ZIndex="100"
+                    HorizontalAlignment="Right" VerticalAlignment="Top" Margin="12,12,12,12"
+                    Panel.ZIndex="200"
                     Style="{StaticResource MaterialDesignRaisedLightButton}"
                     Background="#6A1B9A"
                     Foreground="White"
-                    Padding="6"
+                    Padding="10"
                     materialDesign:ButtonAssist.CornerRadius="12">
-                <materialDesign:PackIcon Kind="ArrowLeft" Width="18" Height="18" />
+                <materialDesign:PackIcon Kind="ArrowLeft" Width="20" Height="20" />
             </Button>
 
             <!-- Product list -->
@@ -35,11 +35,40 @@
                              VerticalAlignment="Stretch"
                              HorizontalAlignment="Stretch">
 
+                        <!-- Prevent the default ListBoxItem selection background from stretching across the full width -->
+                        <ListBox.ItemContainerStyle>
+                            <Style TargetType="ListBoxItem">
+                                <Setter Property="HorizontalContentAlignment" Value="Center"/>
+                                <Setter Property="VerticalContentAlignment" Value="Top"/>
+                                <Setter Property="Background" Value="Transparent"/>
+                                <Setter Property="BorderThickness" Value="0"/>
+                                <Setter Property="Padding" Value="0"/>
+                                <Style.Triggers>
+                                    <Trigger Property="IsSelected" Value="True">
+                                        <Setter Property="Background" Value="Transparent"/>
+                                    </Trigger>
+                                </Style.Triggers>
+                            </Style>
+                        </ListBox.ItemContainerStyle>
+
                         <ListBox.ItemTemplate>
                             <DataTemplate>
-                                <Border Width="300" Height="380">
+                                <!-- Reduced height by ~15% (from 342 -> 291) and width to match -->
+                                <Border Width="255" Height="291">
+                                    <Border.Style>
+                                        <Style TargetType="Border">
+                                            <Setter Property="Background" Value="Transparent" />
+                                            <Style.Triggers>
+                                                <DataTrigger Binding="{Binding IsSelected, RelativeSource={RelativeSource AncestorType=ListBoxItem}}" Value="True">
+                                                    <Setter Property="Background" Value="#E0E0E0"/>
+                                                </DataTrigger>
+                                            </Style.Triggers>
+                                        </Style>
+                                    </Border.Style>
+
                                     <StackPanel>
-                                        <Border Width="170" Height="170"
+                                        <!-- Icon reduced by ~10% (170 -> 153) -->
+                                        <Border Width="153" Height="153"
                                                 CornerRadius="5" Margin="5">
                                             <Border.Effect>
                                                 <DropShadowEffect ShadowDepth="1"/>
@@ -50,21 +79,22 @@
                                             </Border.Background>
                                         </Border>
 
-                                        <TextBlock Margin="5"
+                                        <TextBlock Margin="3"
                                                    Text="{Binding Referencia}"
-                                                   FontSize="17"
+                                                   FontSize="11"
                                                    HorizontalAlignment="Center"
                                                    FontWeight="Bold"/>
 
-                                        <TextBlock Margin="5"
+                                        <TextBlock Margin="3,2,3,2"
                                                    Text="{Binding Descricao}"
                                                    TextWrapping="Wrap"
-                                                   FontSize="25"
+                                                   FontSize="13"
+                                                   MaxWidth="230"
                                                    HorizontalAlignment="Center"
                                                    FontWeight="Bold"/>
                                         <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
-                                            <TextBlock Margin="5 0" Text="R$" FontSize="17" FontWeight="SemiBold"/>
-                                            <TextBlock Text="{Binding Valor}" FontSize="17" FontWeight="SemiBold"/>
+                                            <TextBlock Margin="2 0" Text="R$" FontSize="11" FontWeight="SemiBold"/>
+                                            <TextBlock Text="{Binding Valor}" FontSize="11" FontWeight="SemiBold"/>
                                         </StackPanel>
                                     </StackPanel>
                                 </Border>
@@ -104,22 +134,6 @@
                             <materialDesign:PackIcon Kind="Cart" Width="18" Height="18" Foreground="White"/>
                             <Border Background="#FFFFFF" CornerRadius="10" Margin="8,0,0,0" Padding="6,0">
                                 <TextBlock Text="+" Foreground="#6A1B9A" FontWeight="Bold" VerticalAlignment="Center" HorizontalAlignment="Center"/>
-                            </Border>
-                        </StackPanel>
-                    </Button>
-
-                    <Button
-                        CommandParameter="{Binding}"
-                        Command="{Binding Remover, UpdateSourceTrigger=PropertyChanged}"
-                        Style="{StaticResource MaterialDesignRaisedLightButton}"
-                        Foreground="White"
-                        Width="120"
-                        Height="36"
-                        materialDesign:ButtonAssist.CornerRadius="18">
-                        <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
-                            <materialDesign:PackIcon Kind="Cart" Width="18" Height="18" Foreground="White"/>
-                            <Border Background="#FFFFFF" CornerRadius="10" Margin="8,0,0,0" Padding="6,0">
-                                <TextBlock Text="-" Foreground="#6A1B9A" FontWeight="Bold" VerticalAlignment="Center" HorizontalAlignment="Center"/>
                             </Border>
                         </StackPanel>
                     </Button>
