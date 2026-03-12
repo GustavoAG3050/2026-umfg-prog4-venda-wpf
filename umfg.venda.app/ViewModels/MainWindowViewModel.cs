@@ -30,17 +30,24 @@ namespace umfg.venda.app.ViewModels
 
         public ListarProdutosCommand ListarProdutos { get; private set; } = new();
 
-        public MainWindowViewModel() : base("UMFG - Tela Pricipal")
+        public MainWindowViewModel() : base("Sistema de Pedidos")
         {
         }
 
         public void Update(ISubject subject)
         {
-            if (subject is ListarProdutosViewModel)
-                UserControl = (subject as ListarProdutosViewModel).UserControl;
+            // When a child view model notifies, update the displayed UserControl and the footer title
+            if (subject is ListarProdutosViewModel lp)
+            {
+                UserControl = lp.UserControl;
+                Titulo = lp.Titulo;
+            }
 
-            if (subject is ReceberPedidoViewModel)
-                UserControl = (subject as ReceberPedidoViewModel).UserControl;
+            if (subject is ReceberPedidoViewModel rp)
+            {
+                UserControl = rp.UserControl;
+                Titulo = rp.Titulo;
+            }
         }
     }
 }

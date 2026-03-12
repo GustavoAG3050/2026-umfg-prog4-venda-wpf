@@ -10,34 +10,36 @@
 
     <Grid Background="#ECF0F1">
         <Grid.RowDefinitions>
-            <RowDefinition Height="*"/>
-            <RowDefinition Height="50"/>
+            <RowDefinition Height="48" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="50" />
         </Grid.RowDefinitions>
 
         <Grid.ColumnDefinitions>
+            <!-- Left column (cart) takes remaining space; right column narrower so payment panel sits closer -->
             <ColumnDefinition Width="*" />
-            <ColumnDefinition Width="Auto" />
+            <ColumnDefinition Width="360" />
         </Grid.ColumnDefinitions>
 
-        <!-- Back button moved to top-right, increased size by ~6px padding -->
-        <Button Command="{Binding Voltar}"
-                HorizontalAlignment="Right" VerticalAlignment="Top" Margin="12,12,12,12"
+        <!-- Back button (top-left) -->
+        <Button Grid.Row="0" Command="{Binding Voltar}"
+                HorizontalAlignment="Left" VerticalAlignment="Center" Margin="12"
                 Panel.ZIndex="200"
                 Style="{StaticResource MaterialDesignRaisedLightButton}"
                 Background="#6A1B9A"
                 Foreground="White"
                 Padding="10"
                 materialDesign:ButtonAssist.CornerRadius="12">
-            <materialDesign:PackIcon Kind="ArrowLeft" Width="20" Height="20" />
+            <materialDesign:PackIcon Kind="ChevronLeft" Width="20" Height="20" HorizontalAlignment="Center" VerticalAlignment="Center" />
         </Button>
 
-        <!-- Move cart items 8px to the right by increasing left margin -->
-        <StackPanel Grid.Row="0" Grid.Column="0" Orientation="Horizontal" Margin="29,8,8,8">
+        <!-- Cart items area -->
+        <Grid Grid.Row="1" Grid.Column="0" Margin="12,8,8,8">
             <DataGrid ItemsSource="{Binding Pedido.Produtos}"
                       HeadersVisibility="None"
                       AutoGenerateColumns="False"
                       HorizontalAlignment="Stretch"
-                      VerticalAlignment="Top"
+                      VerticalAlignment="Stretch"
                       GridLinesVisibility="None"
                       CanUserSortColumns="False"
                       CanUserAddRows="False"
@@ -45,7 +47,7 @@
                       Background="Transparent"
                       RowBackground="Transparent"
                       AlternatingRowBackground="Transparent"
-                      MinRowHeight="100">
+                      MinRowHeight="80">
                 <DataGrid.Resources>
                     <Style TargetType="DataGrid">
                         <Setter Property="BorderThickness" Value="0"/>
@@ -97,17 +99,11 @@
                             </DataGridTemplateColumn.CellTemplate>
                         </DataGridTemplateColumn>
 
-                        <DataGridTemplateColumn Width="300">
+                        <DataGridTemplateColumn Width="2*">
                             <DataGridTemplateColumn.CellTemplate>
                                 <DataTemplate>
                                     <StackPanel Orientation="Horizontal" Margin="13,0,0,0">
-                                        <TextBlock
-        Text="{Binding Referencia}"
-        FontWeight="SemiBold"
-        FontSize="20"
-        VerticalAlignment="Center"
-        HorizontalAlignment="Left"/>
-
+                                        <!-- Show only description on payment screen (remove reference codes) -->
                                         <TextBlock
             Text="{Binding Descricao}"
             FontWeight="SemiBold"
@@ -148,10 +144,12 @@
 
                     </DataGrid.Columns>
                 </DataGrid>
-        </StackPanel>
+        </Grid>
 
         <!-- Payment panel moved 5px left (closer to cart items) by decreasing left margin -->
-        <Border Grid.Row="0" Grid.Column="1" Margin="6,16,16,16" Background="Transparent" MaxWidth="520" VerticalAlignment="Center">
+        <!-- Center the payment panel horizontally across the content area (placed in the middle of the screen) -->
+        <!-- Center payment panel across the full content area (middle of the screen) -->
+        <Border Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2" Margin="0,40,0,40" Background="Transparent" Width="360" VerticalAlignment="Center" HorizontalAlignment="Center" Panel.ZIndex="150">
             <StackPanel Orientation="Vertical" HorizontalAlignment="Stretch" Margin="3">
                 <ComboBox FontSize="18" FontWeight="SemiBold" SelectedIndex="0" HorizontalAlignment="Stretch" Margin="0,0,0,8">
                     <ComboBoxItem Content="Selecionar um Cartão"/>

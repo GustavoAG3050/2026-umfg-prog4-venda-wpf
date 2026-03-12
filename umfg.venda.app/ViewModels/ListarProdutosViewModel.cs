@@ -42,7 +42,7 @@ namespace umfg.venda.app.ViewModels
         public ReceberPedidoCommand Receber { get; private set; } = new();
         public Abstracts.AbstractCommand Voltar { get; private set; }
 
-        public ListarProdutosViewModel(IObserver observer, UserControl userControl) : base("Produtos")
+        public ListarProdutosViewModel(IObserver observer, UserControl userControl) : base("Faça seu pedido")
         {
             UserControl = userControl;
             MainWindow = observer;

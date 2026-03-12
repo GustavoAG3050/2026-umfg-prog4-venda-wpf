@@ -54,7 +54,7 @@ namespace umfg.venda.app.ViewModels
         public Abstracts.AbstractCommand RemoverItem { get; private set; }
 
         public ReceberPedidoViewModel(UserControl userControl, IObserver observer, PedidoModel pedido)
-            : base("Receber Pedido")
+            : base("Faça seu pagamento")
         {
             UserControl = userControl ?? throw new ArgumentNullException(nameof(userControl));
             MainWindow = observer ?? throw new ArgumentNullException(nameof(observer));
