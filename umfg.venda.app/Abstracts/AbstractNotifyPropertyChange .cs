@@ -22,7 +22,7 @@ namespace umfg.venda.app.Abstracts
             }
         }
 
-        private void RaizePropertyChange(string nameProperty)
+        protected void RaizePropertyChange(string nameProperty)
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameProperty));
         }

@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using System.Windows;
 using umfg.venda.app.Abstracts;
 using umfg.venda.app.ViewModels;
+using umfg.venda.app.Models;
 
 namespace umfg.venda.app.Commands
 {
@@ -35,9 +36,9 @@ namespace umfg.venda.app.Commands
                 return;
             }
 
-            //testa se o item selecionado pelo usuário consta na lista de itens do pedido
-            //utilizando a passagem instrução lambda no método Any()
-            if (!vm.Pedido.Produtos.Any(x => x.Id == vm.ProdutoSelecionado.Id))
+            // find item in Pedido.Produtos by Produto.Id
+            var item = vm.Pedido.Produtos.FirstOrDefault(x => x.Produto != null && x.Produto.Id == vm.ProdutoSelecionado.Id);
+            if (item is null)
             {
                 MessageBox.Show($"{vm.ProdutoSelecionado.Descricao} não foi encontrado no carrinho!");
                 return;
@@ -52,8 +53,8 @@ namespace umfg.venda.app.Commands
                 return;
             }
 
-            vm.Pedido.Produtos.Remove(vm.ProdutoSelecionado);
-            vm.Pedido.Total = vm.Pedido.Produtos.Sum(x => x.Valor);
+            vm.Pedido.Produtos.Remove(item);
+            vm.Pedido.RecalcularTotal();
             vm.RaiseCanExecuteChanged();
         }
     }

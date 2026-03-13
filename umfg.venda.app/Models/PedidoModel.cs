@@ -12,7 +12,7 @@ namespace umfg.venda.app.Models
     {
         private Guid _id = Guid.NewGuid();
         private decimal _total = 0.0m;
-        private ObservableCollection<ProdutoModel> _produtos = new System.Collections.ObjectModel.ObservableCollection<ProdutoModel>();
+        private ObservableCollection<PedidoItemModel> _produtos = new System.Collections.ObjectModel.ObservableCollection<PedidoItemModel>();
 
         public Guid Id 
         { 
@@ -26,10 +26,15 @@ namespace umfg.venda.app.Models
             set => SetField(ref _total, value);
         }
 
-        public ObservableCollection<ProdutoModel> Produtos
+        public ObservableCollection<PedidoItemModel> Produtos
         { 
             get => _produtos; 
             set => SetField(ref _produtos, value);
+        }
+
+        public void RecalcularTotal()
+        {
+            Total = Produtos.Sum(x => x.Subtotal);
         }
     }
 }

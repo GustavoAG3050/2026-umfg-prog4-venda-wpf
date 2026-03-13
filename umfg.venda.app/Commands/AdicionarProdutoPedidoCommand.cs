@@ -7,6 +7,7 @@ using System.Windows;
 using Microsoft.VisualBasic;
 using umfg.venda.app.Abstracts;
 using umfg.venda.app.ViewModels;
+using umfg.venda.app.Models;
 
 namespace umfg.venda.app.Commands
 {
@@ -14,10 +15,8 @@ namespace umfg.venda.app.Commands
     {
         public override void Execute(object? parameter)
         {
-            //'parameter' é convertido para o tipo 'ListarProdutosViewModel' usando a expressão 'as'
             var vm = parameter as ListarProdutosViewModel;
 
-            //implementado Fail First (clean code)
             if (vm is null)
             {
                 MessageBox.Show("Parâmetro obrigatório não foi informado");
@@ -41,7 +40,6 @@ namespace umfg.venda.app.Commands
             if (!MessageBoxResult.Yes.Equals(result))
                 return;
 
-            // Ask for quantity using a simple input box
             try
             {
                 string input = Interaction.InputBox("Informe a quantidade:", "Quantidade", "1");
@@ -54,12 +52,23 @@ namespace umfg.venda.app.Commands
                     return;
                 }
 
-                for (int i = 0; i < quantidade; i++)
+                // Use PedidoItemModel: increment quantidade if produto already in cart
+                var existing = vm.Pedido.Produtos.FirstOrDefault(p => p.Produto != null && p.Produto.Id == vm.ProdutoSelecionado.Id);
+                if (existing is not null)
                 {
-                    vm.Pedido.Produtos.Add(vm.ProdutoSelecionado);
+                    existing.Quantidade += quantidade;
+                }
+                else
+                {
+                    var item = new PedidoItemModel
+                    {
+                        Produto = vm.ProdutoSelecionado,
+                        Quantidade = quantidade
+                    };
+                    vm.Pedido.Produtos.Add(item);
                 }
 
-                vm.Pedido.Total = vm.Pedido.Produtos.Sum(x => x.Valor); //atualizar o sub-total do pedido
+                vm.Pedido.RecalcularTotal();
                 vm.RaiseCanExecuteChanged();
             }
             catch (Exception ex)

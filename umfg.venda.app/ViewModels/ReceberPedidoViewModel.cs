@@ -191,24 +191,31 @@ namespace umfg.venda.app.ViewModels
 
             public override bool CanExecute(object? parameter)
             {
-                return parameter is umfg.venda.app.Models.ProdutoModel && _vm?.Pedido?.Produtos?.Any() == true;
+                // accept either PedidoItemModel or ProdutoModel
+                return (_vm?.Pedido?.Produtos?.Any() == true) && (parameter is PedidoItemModel || parameter is umfg.venda.app.Models.ProdutoModel);
             }
 
             public override void Execute(object? parameter)
             {
-                if (parameter is not umfg.venda.app.Models.ProdutoModel produto)
-                    return;
-
                 if (_vm?.Pedido?.Produtos is null)
                     return;
 
-                // Find and remove the product from cart
-                var produtoNoCarrinho = _vm.Pedido.Produtos.FirstOrDefault(x => x.Id == produto.Id);
-                if (produtoNoCarrinho is not null)
+                PedidoItemModel itemToRemove = null;
+
+                if (parameter is PedidoItemModel pItem)
                 {
-                    _vm.Pedido.Produtos.Remove(produtoNoCarrinho);
-                    _vm.Pedido.Total = _vm.Pedido.Produtos.Sum(x => x.Valor);
+                    itemToRemove = _vm.Pedido.Produtos.FirstOrDefault(x => x == pItem);
                 }
+                else if (parameter is umfg.venda.app.Models.ProdutoModel prod)
+                {
+                    itemToRemove = _vm.Pedido.Produtos.FirstOrDefault(x => x.Produto != null && x.Produto.Id == prod.Id);
+                }
+
+                if (itemToRemove is null)
+                    return;
+
+                _vm.Pedido.Produtos.Remove(itemToRemove);
+                _vm.Pedido.RecalcularTotal();
             }
         }
     }
