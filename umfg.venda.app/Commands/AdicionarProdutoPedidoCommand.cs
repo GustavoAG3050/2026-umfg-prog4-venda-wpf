@@ -52,7 +52,7 @@ namespace umfg.venda.app.Commands
                     return;
                 }
 
-                // Use PedidoItemModel: increment quantidade if produto already in cart
+                
                 var existing = vm.Pedido.Produtos.FirstOrDefault(p => p.Produto != null && p.Produto.Id == vm.ProdutoSelecionado.Id);
                 if (existing is not null)
                 {

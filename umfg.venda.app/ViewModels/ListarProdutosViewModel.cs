@@ -48,7 +48,7 @@ namespace umfg.venda.app.ViewModels
             MainWindow = observer;
 
             Add(observer);
-            // reuse the shared Pedido instance from MainWindowViewModel when available
+            
             if (observer is umfg.venda.app.ViewModels.MainWindowViewModel mainVm)
             {
                 if (mainVm.Pedido is not null)

@@ -13,7 +13,7 @@
             <RowDefinition Height="50"/>
         </Grid.RowDefinitions>
 
-        <!-- Title moved to bottom left -->
+        
         <StackPanel Grid.Row="1" Orientation="Horizontal" Margin="25,0,0,8" VerticalAlignment="Bottom">
             <TextBlock Text="{Binding Titulo}" FontSize="28" FontWeight="SemiBold"
                        FontFamily="Trebuchet MS" VerticalAlignment="Center"/>
@@ -22,17 +22,25 @@
         <Button Grid.Row="0"
                 VerticalAlignment="Center"
                 HorizontalAlignment="Center"
-                Content="_Iniciar"
-                FontSize="24"
-                FontWeight="SemiBold"
+                Content="Iniciar"
                 CommandParameter="{Binding}"
-                Command="{Binding ListarProdutos, UpdateSourceTrigger=PropertyChanged}"                        
-                Style="{StaticResource MaterialDesignRaisedLightButton}"
+                Command="{Binding ListarProdutos, UpdateSourceTrigger=PropertyChanged}"
                 Margin="0"
-                Foreground="White"
-                materialDesign:ButtonAssist.CornerRadius="18"
-                Width="{Binding ActualHeight, RelativeSource={RelativeSource AncestorType=Grid}, Converter={StaticResource MulConverter}, ConverterParameter=0.2}"
-                Height="{Binding ActualHeight, RelativeSource={RelativeSource AncestorType=Grid}, Converter={StaticResource MulConverter}, ConverterParameter=0.2}"/>
+                Background="White"
+                BorderBrush="#E6E6E6"
+                BorderThickness="1"
+                Padding="20,8"
+                FontSize="18"
+                FontWeight="SemiBold"
+                Foreground="#333333"
+                materialDesign:ButtonAssist.CornerRadius="24"
+                MinWidth="120"
+                Width="Auto"
+                Height="48">
+            <Button.Effect>
+                <DropShadowEffect Color="#66000000" BlurRadius="12" ShadowDepth="2" Opacity="0.18" />
+            </Button.Effect>
+        </Button>
         
         <Frame Grid.Row="0" 
                Content="{Binding UserControl}"

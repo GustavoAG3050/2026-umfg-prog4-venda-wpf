@@ -16,24 +16,22 @@
         </Grid.RowDefinitions>
 
         <Grid.ColumnDefinitions>
-            <!-- Left column (cart) flexible; right column fixed for payment panel but collapses on narrow widths -->
+            
             <ColumnDefinition Width="*" MinWidth="300" />
             <ColumnDefinition Width="380" MinWidth="320" />
         </Grid.ColumnDefinitions>
 
-        <!-- Back button (top-left) -->
+        
         <Button Grid.Row="0" Command="{Binding Voltar}"
                 HorizontalAlignment="Left" VerticalAlignment="Center" Margin="12"
                 Panel.ZIndex="200"
-                Style="{StaticResource MaterialDesignRaisedLightButton}"
-                Background="#6A1B9A"
-                Foreground="White"
                 Padding="10"
+                Style="{StaticResource DefaultAppButtonStyle}"
                 materialDesign:ButtonAssist.CornerRadius="12">
-            <materialDesign:PackIcon Kind="ChevronLeft" Width="20" Height="20" HorizontalAlignment="Center" VerticalAlignment="Center" />
+            <materialDesign:PackIcon Kind="ChevronLeft" Width="20" Height="20" HorizontalAlignment="Center" VerticalAlignment="Center" Foreground="#333333" />
         </Button>
 
-        <!-- Cart items area with its own scroll (fixed height) -->
+        
         <Border Grid.Row="1" Grid.Column="0" Margin="12,8,8,8" Background="Transparent">
             <Grid>
                 <Grid.RowDefinitions>
@@ -43,7 +41,7 @@
 
                 <TextBlock Text="Itens no Carrinho" FontSize="18" FontWeight="Bold" Margin="6" />
 
-                <!-- Scroll only the items list; payment panel not affected -->
+                
                 <ScrollViewer Grid.Row="1" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Disabled" Margin="0,8,0,0">
                     <ItemsControl ItemsSource="{Binding Pedido.Produtos}" MinWidth="300">
                         <ItemsControl.ItemTemplate>
@@ -76,7 +74,7 @@
                                             <TextBlock Text="{Binding Subtotal, StringFormat={}{0:N2}}" FontWeight="ExtraBold" FontSize="18" HorizontalAlignment="Right" />
                                         </StackPanel>
 
-                                        <!-- Remove button positioned top-right of item -->
+                                        
                                         <Button Width="28" Height="28" Background="#D32F2F" Foreground="White" HorizontalAlignment="Left" VerticalAlignment="Top"
                                                 Command="{Binding DataContext.RemoverItem, RelativeSource={RelativeSource AncestorType=UserControl}}"
                                                 CommandParameter="{Binding}" Padding="0" Margin="-8,-8,0,0">
@@ -91,7 +89,7 @@
             </Grid>
         </Border>
 
-        <!-- Payment panel fixed in right column; stays visible regardless of items scroll -->
+        
         <Border Grid.Row="1" Grid.Column="1" Margin="8,40,12,40" Background="White" CornerRadius="8" Padding="12" Panel.ZIndex="150">
             <StackPanel Orientation="Vertical" HorizontalAlignment="Stretch">
                 <TextBlock Text="Faça seu pagamento" FontSize="20" FontWeight="Bold" Margin="0,0,0,8" />
@@ -103,7 +101,7 @@
                 </ComboBox>
 
                 <TextBlock Text="Número do Cartão" FontSize="14" FontWeight="SemiBold" Margin="0,4,0,2"/>
-                <TextBox Text="{Binding NumeroCartao, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" FontSize="14" HorizontalAlignment="Stretch" Margin="0,0,0,8"/>
+                <TextBox Text="{Binding NumeroCartao, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" FontSize="14" HorizontalAlignment="Stretch" Margin="0,0,0,8" Width="508"/>
 
                 <Grid Margin="0,0,0,8">
                     <Grid.ColumnDefinitions>
@@ -129,7 +127,7 @@
                     <Button Content="Pagar" Command="{Binding Receber}" Width="120" Height="36" Background="#008000" Foreground="White" materialDesign:ButtonAssist.CornerRadius="8"/>
                 </StackPanel>
 
-                <!-- Subtotal display pinned to bottom of payment panel -->
+                
                 <Border BorderThickness="1" BorderBrush="#EEE" Margin="0,12,0,0" Padding="8">
                     <Grid>
                         <Grid.ColumnDefinitions>

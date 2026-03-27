@@ -36,7 +36,7 @@ namespace umfg.venda.app.ViewModels
 
         public void Update(ISubject subject)
         {
-            // When a child view model notifies, update the displayed UserControl and the footer title
+            
             if (subject is ListarProdutosViewModel lp)
             {
                 UserControl = lp.UserControl;

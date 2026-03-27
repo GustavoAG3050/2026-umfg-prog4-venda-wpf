@@ -59,7 +59,7 @@ namespace umfg.venda.app.ViewModels
             UserControl = userControl ?? throw new ArgumentNullException(nameof(userControl));
             MainWindow = observer ?? throw new ArgumentNullException(nameof(observer));
 
-            // ensure shared Pedido instance with MainWindowViewModel so cart persists across navigation
+            
             if (observer is umfg.venda.app.ViewModels.MainWindowViewModel mainVm)
             {
                 if (mainVm.Pedido is not null && mainVm.Pedido.Produtos is not null && mainVm.Pedido.Produtos.Count > 0)
@@ -115,7 +115,7 @@ namespace umfg.venda.app.ViewModels
                 else
                 {
                     var selected = _vm.DataValidade.Value;
-                    // consider only month/year; card valid if last day of selected month is >= today
+                    
                     var lastDay = new DateTime(selected.Year, selected.Month, DateTime.DaysInMonth(selected.Year, selected.Month));
                     if (lastDay < DateTime.Today)
                         errors.Add("Data de validade do cartão deve ser superior à data atual.");
@@ -127,10 +127,10 @@ namespace umfg.venda.app.ViewModels
                     return;
                 }
 
-                // success
+                
                 MessageBox.Show("Pagamento efetuado com sucesso!", "Sucesso", MessageBoxButton.OK, MessageBoxImage.Information);
 
-                // retornar para tela principal
+                
                 if (_vm.MainWindow is umfg.venda.app.ViewModels.MainWindowViewModel mainVm)
                 {
                     mainVm.UserControl = null;
@@ -139,11 +139,11 @@ namespace umfg.venda.app.ViewModels
 
             private static bool IsValidCardNumber(string number)
             {
-                // remove spaces/hyphens
+                
                 var digits = System.Text.RegularExpressions.Regex.Replace(number, "[^0-9]", string.Empty);
                 if (digits.Length < 12 || digits.Length > 19) return false;
 
-                // Luhn algorithm
+                
                 int sum = 0;
                 bool alternate = false;
                 for (int i = digits.Length - 1; i >= 0; i--)
@@ -172,7 +172,7 @@ namespace umfg.venda.app.ViewModels
 
             public override void Execute(object? parameter)
             {
-                // voltar para a tela de listar produtos
+                
                 if (_vm.MainWindow is umfg.venda.app.ViewModels.MainWindowViewModel mainVm)
                 {
                     umfg.venda.app.UserControls.ucListarProdutos.Show(mainVm);
@@ -191,7 +191,7 @@ namespace umfg.venda.app.ViewModels
 
             public override bool CanExecute(object? parameter)
             {
-                // accept either PedidoItemModel or ProdutoModel
+                
                 return (_vm?.Pedido?.Produtos?.Any() == true) && (parameter is PedidoItemModel || parameter is umfg.venda.app.Models.ProdutoModel);
             }
 

@@ -16,7 +16,7 @@ namespace umfg.venda.app.Commands
         {
             var vm = parameter as ListarProdutosViewModel;
 
-            //o método Any() indica que a lista possui ao menos um registro
+            
             return vm is not null && vm.Pedido.Produtos.Any();
         }
 
@@ -36,7 +36,7 @@ namespace umfg.venda.app.Commands
                 return;
             }
 
-            // find item in Pedido.Produtos by Produto.Id
+            
             var item = vm.Pedido.Produtos.FirstOrDefault(x => x.Produto != null && x.Produto.Id == vm.ProdutoSelecionado.Id);
             if (item is null)
             {
